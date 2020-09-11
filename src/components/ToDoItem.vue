@@ -1,0 +1,75 @@
+<template>
+    <li @mouseover='show' @mouseout='hid'>
+        <label>
+            <input type="checkbox" v-model="todo.flag">
+            <span>{{todo.task}}</span>
+        </label>
+        <button class="btn btn-danger" :style='style' @click='del'>删除</button>
+    </li>
+</template>
+
+<script>
+    export default {
+        props: {
+            todo: Object,
+            index: Number,
+            delItem: Function
+        },
+        methods: {
+            del () {
+                if(window.confirm('确认删除： '+this.todo.task+' 任务?')){
+                    this.delItem(this.index)
+                }
+                
+            },
+            show () {
+                this.style = 'display: block;'
+            },
+            hid () {
+                this.style = 'display: none;'
+            }
+        },
+        data () {
+            return {
+                style:'display: none;'
+            }
+        },
+    }
+</script>
+
+<style>
+    /*item*/
+    li {
+        list-style: none;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 5px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    li label {
+        float: left;
+        cursor: pointer;
+    }
+    
+    li label li input {
+        vertical-align: middle;
+        margin-right: 6px;
+        position: relative;
+        top: -1px;
+    }
+    
+    li button {
+        float: right;
+        display: none;
+        margin-top: 3px;
+    }
+    
+    li:before {
+        content: initial;
+    }
+    
+    li:last-child {
+        border-bottom: none;
+    }
+</style>
